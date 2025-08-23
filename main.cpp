@@ -89,16 +89,16 @@ void input()
 	switch (tecla)
 	{
 	case KEY_UP:
-		miEstudiante.setY(miEstudiante.getY() - 1);
+		if (miEstudiante.getY() > 1) miEstudiante.setY(miNave.getY() - 1);
 		break;
 	case KEY_DOWN:
-		miEstudiante.setY(miEstudiante.getY() + 1);
+		if (miEstudiante.getY() < ALTO - 4) miEstudiante.setY(miNave.getY() + 1);
 		break;
 	case KEY_LEFT:
-		miEstudiante.setX(miEstudiante.getX() - 1);
+		if (miEstudiante.getX() > 1) miEstudiante.setX(miNave.getX() - 1);
 		break;
 	case KEY_RIGHT:
-		miEstudiante.setX(miEstudiante.getX() + 1);
+		if (miEstudiante.getX() < ANCHO - 4) miEstudiante.setX(miNave.getX() + 1);
 		break;
 	case 27: // 27: tecla esc
 		game_over = true;
@@ -144,6 +144,12 @@ void draw()
 	erase();
 	box(stdscr, 0, 0);
 
+// Dibujamos la interfaz que muestra el tiempo NO SE SI ESTA BIEN, CHECKEAR QUE FUNCIONE
+	mvprintw(0, 80, "[ TIEMPO:     ]");
+	mvaddch(0, 91 + 1, '1');
+	mvaddch(0, 91 + 2, '0');
+	mvaddch(0, 91 + 3, '0');
+	
 	miEstudiante.draw();
 
 	refresh();
@@ -177,3 +183,4 @@ void gameover()
 		salir = true;
 	}
 }
+
