@@ -21,9 +21,10 @@ const int DELAY = 30;
 bool game_over;
 int vidas;
 float tiempo;
+bool crisis;
 bool salir;
 
-Estudiante miEstudiante ;
+Estudiante miEstudiante;
 
 //// DECLARACION FUNCIONES GLOBALES ////
 
@@ -89,16 +90,16 @@ void input()
 	switch (tecla)
 	{
 	case KEY_UP:
-		if (miEstudiante.getY() > 1) miEstudiante.setY(miNave.getY() - 1);
+		if (miEstudiante.getY() > 1) miEstudiante.setY(miEstudiante.getY() - 1);
 		break;
 	case KEY_DOWN:
-		if (miEstudiante.getY() < ALTO - 4) miEstudiante.setY(miNave.getY() + 1);
+		if (miEstudiante.getY() < ALTO - 4) miEstudiante.setY(miEstudiante.getY() + 1);
 		break;
 	case KEY_LEFT:
-		if (miEstudiante.getX() > 1) miEstudiante.setX(miNave.getX() - 1);
+		if (miEstudiante.getX() > 1) miEstudiante.setX(miEstudiante.getX() - 1);
 		break;
 	case KEY_RIGHT:
-		if (miEstudiante.getX() < ANCHO - 4) miEstudiante.setX(miNave.getX() + 1);
+		if (miEstudiante.getX() < ANCHO - 4) miEstudiante.setX(miEstudiante.getX() + 1);
 		break;
 	case 27: // 27: tecla esc
 		game_over = true;
@@ -110,34 +111,12 @@ void input()
 
 void update()
 {
-    // contador de tiempo: 
-	tiempo -- ;
-    if (tiempo <= 0) 
-    {
-        vidas -- ;
-		tiempo = 100
-	}
-    if (vidas <= 0)
-    {
-        game_over = true;
-    }
+	miEstudiante.update();
+
+	//perder vidas
+	if (miEstudiante.getTiempo() <=0 ) crisis = true;
+	if (miEstudiante.getVidas() <= 0) game_over = true;
 }	
-
-// switch (nivel)
-    //{
-        //case 1: 
-        // LA CASA
-        //break;
-        
-        //case 2: 
-        // SUBTE
-        //break;
-
-        //case 3: 
-        // MANIFESTANTES
-        //break;
-    //}
-}
 
 void draw()
 {
@@ -149,6 +128,16 @@ void draw()
 	mvaddch(0, 91 + 1, '1');
 	mvaddch(0, 91 + 2, '0');
 	mvaddch(0, 91 + 3, '0');
+
+// Dibujamos la interfaz que muestra las vidas.
+// Usamos el caracter ♥ para las vidas
+	mvprintw(0, 100, "[ VIDAS:     ]");
+
+	for (int i = 0; i < miNave.getVidas(); i++)
+	{
+		mvaddch(0, 109 + i, ACS_HEART);
+	}
+
 	
 	miEstudiante.draw();
 
@@ -183,4 +172,5 @@ void gameover()
 		salir = true;
 	}
 }
+
 
