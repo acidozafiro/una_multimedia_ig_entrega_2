@@ -82,7 +82,7 @@ void Estudiante::setY(int y) { m_y = y; }
 int Estudiante::getX() { return m_x; }
 int Estudiante::getY() { return m_y; }
 
-//Setters y Getters de 
+//Setters y Getters de variables
 void Estudiante::setTiempo (float tiempo) { m_tiempo = tiempo; }
 int Estudiante::getTiempo() { return m_tiempo; }
 
