@@ -15,10 +15,14 @@ public:
   int getX();
   int getY();
 
+  void setTiempo (float tiempo);
+  float getTiempo();
+
   void setVidas(int vidas);
   int getVidas();
 
 private:
   int m_x, m_y;
+  int m_tiempo
   int m_vidas;
 };
