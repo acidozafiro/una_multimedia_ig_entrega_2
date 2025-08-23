@@ -23,6 +23,7 @@ public:
 
 private:
   int m_x, m_y;
-  int m_tiempo
+  float m_tiempo;
   int m_vidas;
+  bool m_crisis;
 };
