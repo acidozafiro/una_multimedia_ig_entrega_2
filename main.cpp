@@ -8,6 +8,10 @@
 #include <ncurses.h>
 #include "Estudiante.h"
 
+#include <cstdlib> // Contiene la función rand() y srand()
+#include <ctime> // Contiene la función time()
+#include "Manifestante.h"
+
 using namespace std;
 
 //// DECLARACION CONSTANTES ////
@@ -25,6 +29,7 @@ bool crisis;
 bool salir;
 
 Estudiante miEstudiante;
+Manifestante manifestante_01 (10,2)
 
 //// DECLARACION FUNCIONES GLOBALES ////
 
@@ -38,6 +43,7 @@ void gameover();
 
 int main() 
 {
+	srand(time(0));
 	initscr();
 	noecho();
 	curs_set(false);
@@ -116,6 +122,9 @@ void update()
 	//perder vidas
 	if (miEstudiante.getTiempo() <=0 ) crisis = true;
 	if (miEstudiante.getVidas() <= 0) game_over = true;
+
+	manifestante_01.update();
+
 }	
 
 void draw()
@@ -140,7 +149,8 @@ void draw()
 
 	
 	miEstudiante.draw();
-
+	manifestante_01.draw();
+	
 	refresh();
 	delay_output(DELAY);
 }
@@ -172,5 +182,6 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
