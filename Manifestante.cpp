@@ -37,3 +37,18 @@ void Manifestante::draw()
   mvaddch(m_y + 1, m_x, '- -   |  ');
   mvaddch(m_y + 2, m_x, '/ \      ');
 }
+void Manifestante::colision(Estudiante &rEstudiante)
+{
+  // Verificamos la colisión. 
+  // Si se cumplen estas condiciones quiere decir que el estudiante entró
+  // en contacto con el bounding box (rectángulo) del estudiante (COLISION).
+  if(m_x >= rEstudiante.getX() && m_x <= rEstudiante.getX() + 4 && m_y >= rEstudiante.getY() && m_y <= rEstudiante.getY() + 2)
+  {
+    // Si hay colisión disminuimos las vidas del estudiante.
+    rEstudiante.setVidas(rEstudiante.getVidas() - 1);
+
+    // Volvemos a colocar el manifestante arriba de todo.
+    m_x = rand() % 118 + 1;
+    m_y = 1;
+  }
+}
