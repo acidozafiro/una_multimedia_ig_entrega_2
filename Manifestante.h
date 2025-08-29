@@ -9,6 +9,8 @@ public:
   void update();
   void draw();
 
+void colision (Estudiante &rEstudiante);
+
 private:
   float m_x, m_y;
 };
