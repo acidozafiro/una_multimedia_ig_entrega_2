@@ -11,4 +11,7 @@ public:
 
 private:
   float m_x, m_y;
+
+  void colision(Estudiante &rEstudiante);
+
 };
