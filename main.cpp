@@ -31,6 +31,10 @@ bool salir;
 Estudiante miEstudiante;
 Manifestante manifestante_01 (10,2)
 
+// Creamos dos objeto más del tipo Manifestante.
+Manifestante manifestante_02(4, 8), manifestante_03(15, 10);
+
+
 //// DECLARACION FUNCIONES GLOBALES ////
 
 void setup();
@@ -125,6 +129,15 @@ void update()
 
 	manifestante_01.update();
 
+	// Actualizamos los valores de los dos manifestantes nuevos.
+	manifestante_02.update();
+	manifestante_03.update();
+
+	// Vamos verificando las colisiones de los tres manifestantes con el estudiante.
+	manifestante_01.colision(miEstudiante);
+	manifestante_02.colision(miEstudiante);
+	manifestante_03.colision(miEstudiante);
+
 }	
 
 void draw()
@@ -150,6 +163,10 @@ void draw()
 	
 	miEstudiante.draw();
 	manifestante_01.draw();
+
+	// Dibujamos los dos manifestantes nuevos.
+	manifestante_02.draw();
+	manifestante_03.draw();
 	
 	refresh();
 	delay_output(DELAY);
@@ -182,6 +199,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
