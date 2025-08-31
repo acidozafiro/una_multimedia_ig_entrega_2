@@ -37,7 +37,7 @@ void Estudiante::draw()
   mvaddch(m_y + 1, m_x + 3, '-');
   mvaddch(m_y + 2, m_x + 1, '/');
   mvaddch(m_y + 2, m_x + 2, ' ');
-  mvaddch(m_y + 2, m_x + 3, '\');
+  mvprintw(m_y + 2, m_x + 3, R"( \ )");
   }
   else
   {
@@ -61,11 +61,11 @@ void Estudiante::draw()
         *  .   .  *
          /   *   \
     \******************/
-    mvprintw(m_y - 1, m_x - 3, "\    *    /");
+    mvprintw(m_y - 1, m_x - 3, R"(\    *    /)");
     mvprintw(m_y, m_x - 2, "*  * *  *");
     mvprintw(m_y + 1, m_x - 3, "*  *   *  *");
     mvprintw(m_y + 2, m_x - 2, "*  * *  *");
-    mvprintw(m_y + 3, m_x - 3, " /   *   \ ");
+    mvprintw(m_y + 3, m_x - 3, R"( /   *   \ )");
 
     // Pausa para ver el fotograma 2.
     refresh();
@@ -84,7 +84,7 @@ int Estudiante::getY() { return m_y; }
 
 //Setters y Getters de variables
 void Estudiante::setTiempo (float tiempo) { m_tiempo = tiempo; }
-int Estudiante::getTiempo() { return m_tiempo; }
+float Estudiante::getTiempo() { return m_tiempo; }
 
 void Estudiante::setVidas(int vidas) { m_vidas = vidas; }
 int Estudiante::getVidas() { return m_vidas; }
