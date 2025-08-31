@@ -29,7 +29,7 @@ bool crisis;
 bool salir;
 
 Estudiante miEstudiante;
-Manifestante manifestante_01 (10,2)
+Manifestante manifestante_01 (10,2);
 
 // Creamos dos objeto más del tipo Manifestante.
 Manifestante manifestante_02(4, 8), manifestante_03(15, 10);
@@ -155,7 +155,7 @@ void draw()
 // Usamos el caracter ♥ para las vidas
 	mvprintw(0, 100, "[ VIDAS:     ]");
 
-	for (int i = 0; i < miNave.getVidas(); i++)
+	for (int i = 0; i < miEstudiante.getVidas(); i++)
 	{
 		mvaddch(0, 109 + i, ACS_HEART);
 	}
@@ -199,6 +199,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
