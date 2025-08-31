@@ -1,4 +1,5 @@
 #include "Manifestante.h"
+#include "Estudiante.h"
 
 Manifestante::Manifestante(int x, int y)
 {
