@@ -7,7 +7,8 @@
 #include <iostream>
 #include <ncurses.h>
 #include "Estudiante.h"
-
+#include <vector>
+#include <array>
 #include <cstdlib> // Contiene la función rand() y srand()
 #include <ctime> // Contiene la función time()
 #include "Manifestante.h"
@@ -18,8 +19,22 @@ using namespace std;
 
 const int ANCHO = 120;
 const int ALTO = 40;
-const int DELAY = 30;
+const int DELAY = 100;
+/// MENU ///
+enum Estados {
+    ESTADO_MENU,
+    ESTADO_JUGANDO,
+    ESTADO_INSTRUCCIONES,
+    ESTADO_GAMEOVER,
+    ESTADO_SALIR
+};
 
+// Opciones del menú
+enum MenuOpciones {
+    MENU_JUGAR = 1,
+    MENU_INSTRUCCIONES,
+    MENU_SALIR
+};
 //// DECLARACION VARIABLES GLOBALES ////
 
 bool game_over;
@@ -29,10 +44,10 @@ bool crisis;
 bool salir;
 
 Estudiante miEstudiante;
-Manifestante manifestante_01 (10,2);
+std::vector<Manifestante> manifestantes;
+std::array<chtype, 3> simbolosVidas = { ACS_HEART, ACS_HEART, ACS_HEART };
 
-// Creamos dos objeto más del tipo Manifestante.
-Manifestante manifestante_02(4, 8), manifestante_03(15, 10);
+
 
 
 //// DECLARACION FUNCIONES GLOBALES ////
@@ -42,45 +57,69 @@ void input();
 void update();
 void draw();
 void gameover();
+int menuPrincipal();          
+void mostrarInstrucciones();
 
 //// MAIN ////
-
 int main() 
 {
-	srand(time(0));
-	initscr();
-	noecho();
-	curs_set(false);
-	keypad(stdscr, true);
-	nodelay(stdscr, true);
+    srand(time(0));
+    initscr();
+    noecho();
+    curs_set(false);
+    keypad(stdscr, true);
+    nodelay(stdscr, true);
 
-    if (LINES < ALTO || COLS < ANCHO)
-	{
-		endwin();
-		printf("La terminal tiene que tener como mínimo %dx%d\n\n", ANCHO, ALTO);
-		exit(1);
-	}
+    if (LINES < ALTO || COLS < ANCHO) {
+        endwin();
+        printf("La terminal tiene que tener como mínimo %dx%d\n\n", ANCHO, ALTO);
+        exit(1);
+    }
 
-    setup();
+    Estados estadoJuego = ESTADO_MENU;
+    salir = false;
 
-	salir = false;
+    while (!salir) {
+        switch (estadoJuego) {
+            case ESTADO_MENU: {
+                int opcion = menuPrincipal();
+                if (opcion == MENU_JUGAR) estadoJuego = ESTADO_JUGANDO;
+                else if (opcion == MENU_INSTRUCCIONES) estadoJuego = ESTADO_INSTRUCCIONES;
+                else if (opcion == MENU_SALIR) estadoJuego = ESTADO_SALIR;
+                break;
+            }
 
-    while (!salir)
-	{
-		while (!game_over)
-		{
-			input();
-			update();
-			draw();
-		}
-		gameover();
-	}
-    
-	endwin();
+            case ESTADO_INSTRUCCIONES:
+                mostrarInstrucciones();
+                estadoJuego = ESTADO_MENU;
+                break;
 
-	cout << endl;
-	return 0;
+            case ESTADO_JUGANDO:
+                setup();
+                while (!game_over) {
+                    input();
+                    update();
+                    draw();
+                }
+                estadoJuego = ESTADO_GAMEOVER;
+                break;
+
+            case ESTADO_GAMEOVER:
+                gameover();
+                estadoJuego = ESTADO_MENU;
+                break;
+
+            case ESTADO_SALIR:
+                salir = true;
+                break;
+        }
+    }
+
+    endwin();
+    cout << endl;
+    return 0;
 }
+
 
 //// DEFINICION FUNCIONES GLOBALES ////
 
@@ -91,6 +130,10 @@ void setup()
     tiempo = 100; 
 
 	miEstudiante.setup();
+	manifestantes.clear();
+manifestantes.push_back(Manifestante(10, 2));
+manifestantes.push_back(Manifestante(4, 8));
+manifestantes.push_back(Manifestante(15, 10));
 }
 
 void input()
@@ -127,17 +170,11 @@ void update()
 	if (miEstudiante.getTiempo() <=0 ) crisis = true;
 	if (miEstudiante.getVidas() <= 0) game_over = true;
 
-	manifestante_01.update();
-
-	// Actualizamos los valores de los dos manifestantes nuevos.
-	manifestante_02.update();
-	manifestante_03.update();
-
-	// Vamos verificando las colisiones de los tres manifestantes con el estudiante.
-	manifestante_01.colision(miEstudiante);
-	manifestante_02.colision(miEstudiante);
-	manifestante_03.colision(miEstudiante);
-
+	//colision
+	for (size_t i = 0; i < manifestantes.size(); i++) {
+        manifestantes[i].update();
+        manifestantes[i].colision(miEstudiante);
+	}
 }	
 
 void draw()
@@ -147,26 +184,19 @@ void draw()
 
 // Dibujamos la interfaz que muestra el tiempo NO SE SI ESTA BIEN, CHECKEAR QUE FUNCIONE
 	mvprintw(0, 80, "[ TIEMPO:     ]");
-	mvaddch(0, 91 + 1, '1');
-	mvaddch(0, 91 + 2, '0');
-	mvaddch(0, 91 + 3, '0');
+	mvprintw(0, 91, "%3d", (int)miEstudiante.getTiempo());
 
 // Dibujamos la interfaz que muestra las vidas.
 // Usamos el caracter ♥ para las vidas
 	mvprintw(0, 100, "[ VIDAS:     ]");
-
-	for (int i = 0; i < miEstudiante.getVidas(); i++)
-	{
-		mvaddch(0, 109 + i, ACS_HEART);
-	}
+	for (int i = 0; i < min(miEstudiante.getVidas(), (int)simbolosVidas.size()); i++)
+   	 mvaddch(0, 109 + i, simbolosVidas[i]);
 
 	
 	miEstudiante.draw();
-	manifestante_01.draw();
-
-	// Dibujamos los dos manifestantes nuevos.
-	manifestante_02.draw();
-	manifestante_03.draw();
+	for (size_t i = 0; i < manifestantes.size(); i++) {
+        manifestantes[i].draw();
+    }
 	
 	refresh();
 	delay_output(DELAY);
@@ -193,12 +223,71 @@ void gameover()
 	if (opcion == 's' || opcion == 'S')
 	{
 		setup();
+		game_over = false;
 	}
 	else if (opcion == 'n' || opcion == 'N')
 	{
 		salir = true;
 	}
 }
+int menuPrincipal()
+	{
+    while (true)
+    {
+        erase();
+        box(stdscr, 0, 0);
+        mvprintw(2, 4, "=== La batalla por la educación pública ===");
+        mvprintw(4, 4, "%d) Jugar",       MENU_JUGAR);
+        mvprintw(5, 4, "%d) Instrucciones", MENU_INSTRUCCIONES);
+        mvprintw(6, 4, "%d) Salir",        MENU_SALIR);
+        mvprintw(8, 4, "Selecciona una opcion y presiona ENTER...");
+        refresh();
+
+        int tecla = getch();
+
+        switch (tecla)
+        {
+        case '1': return MENU_JUGAR;
+        case '2': return MENU_INSTRUCCIONES;
+        case '3': return MENU_SALIR;
+        default: break;
+        }
+    }
+}
+
+void imprimirLinea(int fila, int col, string texto) {
+    for (size_t i = 0; i < texto.size(); i++) {
+        mvaddch(fila, col + i, texto[i]);
+    }
+}
+
+void mostrarInstrucciones()
+{
+    erase();
+    box(stdscr, 0, 0);
+
+    string titulo       = "=== La batalla por la educacion publica ===";
+    string objetivo     = "Objetivo del juego:";
+    string explicacion  = "Llegar a rendir el final antes de que se acabe el tiempo.";
+    string controles    = "Controles:";
+    string control_up   = "Flechas - Mover al estudiante";
+    string control_esc  = "ESC     - Salir del juego";
+    string advertencia  = "Evita chocar con los manifestantes!";
+    string volver       = "Presiona cualquier tecla para volver...";
+
+    imprimirLinea(2, 4, titulo);
+    imprimirLinea(4, 4, objetivo);
+    imprimirLinea(5, 6, explicacion);
+    imprimirLinea(7, 4, controles);
+    imprimirLinea(8, 6, control_up);
+    imprimirLinea(9, 6, control_esc);
+    imprimirLinea(11, 4, advertencia);
+    imprimirLinea(13, 4, volver);
+
+    refresh();
+    getch();
+}
+
 
 
 
