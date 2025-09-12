@@ -8,6 +8,7 @@
 #include <ncurses.h>
 #include <cstdlib> // Contiene la función rand() y srand()
 #include <ctime> // Contiene la función time()
+#include <vector>
 #include "Estudiante.h"
 #include "Manifestante.h"
 
@@ -202,6 +203,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
