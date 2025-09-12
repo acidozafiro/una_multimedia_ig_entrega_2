@@ -6,10 +6,9 @@
 
 #include <iostream>
 #include <ncurses.h>
-#include "Estudiante.h"
-
 #include <cstdlib> // Contiene la función rand() y srand()
 #include <ctime> // Contiene la función time()
+#include "Estudiante.h"
 #include "Manifestante.h"
 
 using namespace std;
@@ -29,10 +28,7 @@ bool crisis;
 bool salir;
 
 Estudiante miEstudiante;
-Manifestante manifestante_01 (10,2);
-
-// Creamos dos objeto más del tipo Manifestante.
-Manifestante manifestante_02(4, 8), manifestante_03(15, 10);
+Manifestante manifestante_01(10,110); manifestante_02(4, 8), manifestante_03(15, 65);
 
 
 //// DECLARACION FUNCIONES GLOBALES ////
@@ -93,6 +89,7 @@ void setup()
 	miEstudiante.setup();
 }
 
+//hacemos mover al estudiante
 void input()
 {
 	int tecla = getch();
@@ -123,17 +120,15 @@ void update()
 {
 	miEstudiante.update();
 
-	//perder vidas
+	//perder vidas y perder juego
 	if (miEstudiante.getTiempo() <=0 ) crisis = true;
 	if (miEstudiante.getVidas() <= 0) game_over = true;
 
 	manifestante_01.update();
-
-	// Actualizamos los valores de los dos manifestantes nuevos.
 	manifestante_02.update();
 	manifestante_03.update();
 
-	// Vamos verificando las colisiones de los tres manifestantes con el estudiante.
+	// colisiones de los tres manifestantes con el estudiante.
 	manifestante_01.colision(miEstudiante);
 	manifestante_02.colision(miEstudiante);
 	manifestante_03.colision(miEstudiante);
@@ -199,6 +194,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
