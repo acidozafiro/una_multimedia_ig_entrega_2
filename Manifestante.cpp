@@ -14,9 +14,9 @@ void Manifestante::update()
   
   if (m_x >= 119)
   {
-    // Cuando el manifestante llegue al límite lo llevamos al costado izq
-    m_x = rand() % 119 + 1; 
-    m_y = 1;
+    // Cuando el manifestante llegue al límite lo llevamos a una posicion random de 'y' con x=1
+    m_y = rand() % 38 + 1; 
+    m_x = 1;
   }
 }
 
@@ -32,6 +32,7 @@ void Manifestante::draw()
   mvaddch(m_y + 1, m_x, '- -   |  ');
   mvaddch(m_y + 2, m_x, '/ \      ');
 }
+
 void Manifestante::colision(Estudiante &rEstudiante)
 {
   // Verificamos la colisión. box de manifestante es de 9x ; 3y. box de estudiante es de 3x ; 3y
@@ -41,7 +42,7 @@ void Manifestante::colision(Estudiante &rEstudiante)
     rEstudiante.setVidas(rEstudiante.getVidas() - 1);
 
     // volvemos a colocar al manifestante al costado izq
-    m_x = rand() % 118 + 1;
-    m_y = 1;
+    m_y = rand() % 38 + 1; 
+    m_x = 1;
   }
 }
