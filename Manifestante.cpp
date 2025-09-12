@@ -9,20 +9,14 @@ Manifestante::Manifestante(int x, int y)
 
 void Manifestante::update()
 {
-  // Incremento en el eje X para que el manifestante se mueva.
-  // Utilizamos un incremento decimal para regular la velocidad del
-  // manifestante. Con "m_x++" se movería con un incremento de 1 más rápidamente.
+  // se mueve de izq a der
   m_x = m_x + 0.4;
-
+  
   if (m_x >= 119)
   {
-    // Cuando el manifestante llegue al límite lo volvemos a subir
-    // a una posición en y al azar.
-    // El alto de la pantalla va de 0 a 39 (ALTO = 39).
-    // En 0 y en 39 tenemos los bordes de la pantalla, por lo que el
-    // manifestante tendría que aparecer entre el 1 y el 38.
-    m_y = rand() % 38 + 1; // Valor aleatorio entre 1 y 38
-    m_x = 1;
+    // Cuando el manifestante llegue al límite lo llevamos al costado izq
+    m_x = rand() % 119 + 1; 
+    m_y = 1;
   }
 }
 
@@ -40,15 +34,13 @@ void Manifestante::draw()
 }
 void Manifestante::colision(Estudiante &rEstudiante)
 {
-  // Verificamos la colisión. 
-  // Si se cumplen estas condiciones quiere decir que el estudiante entró
-  // en contacto con el bounding box (rectángulo) del estudiante (COLISION).
-  if(m_x >= rEstudiante.getX() && m_x <= rEstudiante.getX() + 4 && m_y >= rEstudiante.getY() && m_y <= rEstudiante.getY() + 2)
+  // Verificamos la colisión. box de manifestante es de 9x ; 3y. box de estudiante es de 3x ; 3y
+  if(m_x >= rEstudiante.getX() && m_x <= rEstudiante.getX() + 9 && m_y >= rEstudiante.getY() && m_y <= rEstudiante.getY() + 3)
   {
-    // Si hay colisión disminuimos las vidas del estudiante.
+    // disminuimos las vidas del estudiante.
     rEstudiante.setVidas(rEstudiante.getVidas() - 1);
 
-    // Volvemos a colocar el manifestante arriba de todo.
+    // volvemos a colocar al manifestante al costado izq
     m_x = rand() % 118 + 1;
     m_y = 1;
   }
