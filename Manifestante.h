@@ -1,7 +1,7 @@
 #pragma once
 #include <ncurses.h>
 #include <cstdlib> // Contiene la función rand()
-#include Estudiante.h
+#include "Estudiante.h"
 
 class Manifestante
 {
