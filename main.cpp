@@ -28,7 +28,7 @@ bool crisis;
 bool salir;
 
 Estudiante miEstudiante;
-Manifestante manifestante_01(10,110); manifestante_02(4, 8), manifestante_03(15, 65);
+vector <Manifestante> Manifestantes; 
 
 
 //// DECLARACION FUNCIONES GLOBALES ////
@@ -43,6 +43,9 @@ void gameover();
 
 int main() 
 {
+	// esto es para que reconozca el char de corazon que usamos en las vidas. checkear si funciona!
+	setlocale(LC_ALL, "");
+	
 	srand(time(0));
 	initscr();
 	noecho();
@@ -87,6 +90,13 @@ void setup()
     tiempo = 100; 
 
 	miEstudiante.setup();
+
+	Manifestantes.clear();
+
+	for (int i = 0; i < 20; i++)
+	{
+		Manifestantes.push_back(Manifestante(rand() % 119 + 1, rand() % 38 + 1));
+	}
 }
 
 //hacemos mover al estudiante
@@ -119,20 +129,19 @@ void input()
 void update()
 {
 	miEstudiante.update();
-
 	//perder vidas y perder juego
 	if (miEstudiante.getTiempo() <=0 ) crisis = true;
 	if (miEstudiante.getVidas() <= 0) game_over = true;
 
-	manifestante_01.update();
-	manifestante_02.update();
-	manifestante_03.update();
+	//update de los manifestantes
+	for (int i = 0; i < Manifestantes.size(); i++)
+	{
+		Manifestantes[i].update();
+		Manifestantes[i].colision(miEstudiante);
+	}
 
-	// colisiones de los tres manifestantes con el estudiante.
-	manifestante_01.colision(miEstudiante);
-	manifestante_02.colision(miEstudiante);
-	manifestante_03.colision(miEstudiante);
-
+	//para que el Estudiante pierda tiempo 
+	tiempo--;
 }	
 
 void draw()
@@ -140,7 +149,7 @@ void draw()
 	erase();
 	box(stdscr, 0, 0);
 
-// Dibujamos la interfaz que muestra el tiempo NO SE SI ESTA BIEN, CHECKEAR QUE FUNCIONE
+// Dibujamos la interfaz que muestra el tiempo NO SE SI ESTA BIEN, CHECKEAR QUE FUNCIONE... TIENE QUE IR BAJANDO DE A 1 HASTA 0.
 	mvprintw(0, 80, "[ TIEMPO:     ]");
 	mvaddch(0, 91 + 1, '1');
 	mvaddch(0, 91 + 2, '0');
@@ -148,7 +157,6 @@ void draw()
 
 // Dibujamos la interfaz que muestra las vidas.
 // Usamos el caracter ♥ para las vidas (wchar_t w_corazon = L'\u2665';)
-	
 	mvprintw(0, 100, "L'\u2665';");
 
 	for (int i = 0; i < miEstudiante.getVidas(); i++)
@@ -158,10 +166,11 @@ void draw()
 
 	
 	miEstudiante.draw();
-	manifestante_01.draw();
-	manifestante_02.draw();
-	manifestante_03.draw();
-	
+
+	for (int i = 0; i < Manifestantes.size(); i++)
+	{
+		Manifestantes[i].draw();
+	}	
 	refresh();
 	delay_output(DELAY);
 }
@@ -193,6 +202,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
