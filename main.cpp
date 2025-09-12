@@ -147,19 +147,18 @@ void draw()
 	mvaddch(0, 91 + 3, '0');
 
 // Dibujamos la interfaz que muestra las vidas.
-// Usamos el caracter ♥ para las vidas
-	mvprintw(0, 100, "[ VIDAS:     ]");
+// Usamos el caracter ♥ para las vidas (wchar_t w_corazon = L'\u2665';)
+	
+	mvprintw(0, 100, "L'\u2665';");
 
 	for (int i = 0; i < miEstudiante.getVidas(); i++)
 	{
-		mvaddch(0, 109 + i, ACS_HEART);
+		mvaddch(0, 109 + i, "L'\u2665'";);
 	}
 
 	
 	miEstudiante.draw();
 	manifestante_01.draw();
-
-	// Dibujamos los dos manifestantes nuevos.
 	manifestante_02.draw();
 	manifestante_03.draw();
 	
@@ -194,6 +193,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
