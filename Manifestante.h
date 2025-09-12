@@ -3,8 +3,6 @@
 #include <cstdlib> // Contiene la función rand()
 #include Estudiante.h
 
-class Estudiante;
-
 class Manifestante
 {
 public:
@@ -24,6 +22,4 @@ public:
 
 private:
   float m_x, m_y;
-
-
 };
