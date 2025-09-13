@@ -4,8 +4,51 @@
 // PERSONAJES: JUGADOR + MANIFESTANTES
 //=========================================================================
 
+
+// PONGO EL MENU PRINCIPAL ACA PORQUE NO SE DONDE IRIA
+
+// MENU PRINCIPAL
+system("clear");
+// acá iría el ASCII con el título del juego y debajo:
+cout << "ELEGÍ UNA OPCIÓN\n";
+cout << "1. INSTRUCCIONES\n";
+cout << "2. CRÉDITOS\n";
+cout << "3. EMPEZAR JUEGO\n";
+
+ switch (decision) 
+ {
+	case 1: {
+		cout << "                                   INSTRUCCIONES:\n"; 			
+		cout << "          ESTÁS ESTUDIANDO EN LA UNA Y TENÉS QUE IR A RENDIR UN FINAL,\n"
+		cout <<	"     PERO ESTÁS LLEGANDO TARDE Y TE CRUZÁS CON LA MARCHA FEDERAL UNIVERSITARIA.\n";
+		cout << "                    USA LAS FLECHAS PARA MOVERTE POR EL ESPACIO\n";
+		cout << "¡RÁPIDO! TRATÁ DE EVITAR LA REALIDAD DEL CONFLICTO UNIVERSITARIO PARA AVANZAR EN TU CARRERA\n";
+    }
+	case 2: {
+		cout << "                                   REALIZADORES:\n";
+		cout << "									LUCA DEIRA\n";
+		cout << "									VALENTÍN MOSEINCO\n";
+		cout << "									LUCERO SANTIN\n";
+		cout << "						PROGRAMADO A CONTRARRELOJ EN ARGENTINA.\n";
+		cout << "			INFORMÁTICA GENERAL, CÁTEDRA TIRIGALL, UNA MULTIMEDIALES, 2025.\n";
+    }
+    case 3: {
+    system("clear");
+    }
+    default:
+    cin.clear();
+    cin.ignore();
+    cout << "Opción no válida, " << nombre << " intentá nuevamente.\n\n";
+    cout << "Presione ENTER para volver al menú principal";
+    cin.ignore().get();
+    break;
+    }
+}
+
+
 #include <iostream>
 #include <ncurses.h>
+#include <string>
 #include <cstdlib> // Contiene la función rand() y srand()
 #include <ctime> // Contiene la función time()
 #include <vector>
@@ -86,6 +129,7 @@ int main()
 
 void setup()
 {
+	
 	game_over = false;
     vidas = 3;
     tiempo = 100; 
@@ -201,6 +245,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
