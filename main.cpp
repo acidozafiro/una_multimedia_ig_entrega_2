@@ -152,9 +152,7 @@ void draw()
 
 // Dibujamos la interfaz que muestra el tiempo NO SE SI ESTA BIEN, CHECKEAR QUE FUNCIONE... TIENE QUE IR BAJANDO DE A 1 HASTA 0.
 	mvprintw(0, 80, "[ TIEMPO:     ]");
-	mvaddch(0, 91 + 1, '1');
-	mvaddch(0, 91 + 2, '0');
-	mvaddch(0, 91 + 3, '0');
+	mvprintw(0, 91, "%3d", (int)miEstudiante.getTiempo());
 
 // Dibujamos la interfaz que muestra las vidas.
 // Usamos el caracter ♥ para las vidas (wchar_t w_corazon = L'\u2665';)
@@ -203,6 +201,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
