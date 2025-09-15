@@ -25,13 +25,13 @@
 	//	cout << "¡RÁPIDO! TRATÁ DE EVITAR LA REALIDAD DEL CONFLICTO UNIVERSITARIO PARA AVANZAR EN TU CARRERA\n";
 //    }
 //	case 2: {
-		cout << "                                   REALIZADORES:\n";
-		cout << "									LUCA DEIRA\n";
-		cout << "									VALENTÍN MOSEINCO\n";
-		cout << "									LUCERO SANTIN\n";
-		cout << "						PROGRAMADO A CONTRARRELOJ EN ARGENTINA.\n";
-		cout << "			INFORMÁTICA GENERAL, CÁTEDRA TIRIGALL, UNA MULTIMEDIALES, 2025.\n";
-    }
+	//	cout << "                                   REALIZADORES:\n";
+	//	cout << "									LUCA DEIRA\n";
+	//	cout << "									VALENTÍN MOSEINCO\n";
+	//	cout << "									LUCERO SANTIN\n";
+	//	cout << "						PROGRAMADO A CONTRARRELOJ EN ARGENTINA.\n";
+	//	cout << "			INFORMÁTICA GENERAL, CÁTEDRA TIRIGALL, UNA MULTIMEDIALES, 2025.\n";
+   // }
 //    case 3: {
   //  system("clear");
    // }
@@ -245,6 +245,7 @@ void gameover()
 		salir = true;
 	}
 }
+
 
 
 
