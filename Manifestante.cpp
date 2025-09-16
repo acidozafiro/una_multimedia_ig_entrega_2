@@ -28,16 +28,19 @@ void Manifestante::draw()
        - -   |  
        / \      
   \******************/ 
-  mvaddch(m_y, m_x, ' 0  {¡#!}');
-  mvaddch(m_y + 1, m_x, '- -   |  ');
-  mvaddch(m_y + 2, m_x, '/ \      ');
+  mvprintw(m_y, m_x, " 0  {¡#!}");
+  mvprintw(m_y + 1, m_x, "- -   |  ");
+  mvprintw(m_y + 2, m_x, "/ \     ");
 }
 
 void Manifestante::colision(Estudiante &rEstudiante)
 {
   // Verificamos la colisión. box de manifestante es de 9x ; 3y. box de estudiante es de 3x ; 3y
-  if(m_x >= rEstudiante.getX() && m_x <= rEstudiante.getX() + 9 && m_y >= rEstudiante.getY() && m_y <= rEstudiante.getY() + 3)
-  {
+  if (rEstudiante.getX() < m_x + 9 && 
+    rEstudiante.getX() + 3 > m_x &&
+    rEstudiante.getY() < m_y + 3 && 
+    rEstudiante.getY() + 3 > m_y)
+	  {
     //MENSAJES QUE APARECEN DE FORMA RANDOM. ACÁ PODRIAMOS USAR LOS ENUMERADOS Y EL ARRAY?
     
     	for (int y = 10; y < 16; y++) mvhline(y, 40, ' ', 40);
@@ -107,7 +110,8 @@ void Manifestante::colision(Estudiante &rEstudiante)
 
     
     // disminuimos las vidas del estudiante.
-    rEstudiante.setVidas(rEstudiante.getVidas() - 1);
+   int vidasActuales = rEstudiante.getVidas();
+        rEstudiante.setVidas(vidasActuales - 1);
     // volvemos a colocar al manifestante al costado izq
     m_y = rand() % 38 + 1; 
     m_x = 1;
