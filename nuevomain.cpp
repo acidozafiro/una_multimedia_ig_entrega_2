@@ -134,6 +134,7 @@ void setup()
     vidas = 3;
     tiempo = 100; 
 	gano = false;
+	timeout(50);
 
 	miEstudiante.setup();
 	manifestantes.clear();
