@@ -42,6 +42,7 @@ int vidas;
 float tiempo;
 bool crisis;
 bool salir;
+bool gano;
 
 Estudiante miEstudiante;
 std::vector<Manifestante> manifestantes;
@@ -59,6 +60,7 @@ void draw();
 void gameover();
 int menuPrincipal();          
 void mostrarInstrucciones();
+void drawUniversidad();
 
 //// MAIN ////
 int main() 
@@ -119,7 +121,10 @@ int main()
     cout << endl;
     return 0;
 }
-
+bool llegoALaUniversidad(Estudiante &e) {
+    // coordenadas de la "puerta" de la universidad
+    return (e.getY() == 12 && e.getX() >= 110 && e.getX() <= 116);
+}
 
 //// DEFINICION FUNCIONES GLOBALES ////
 
@@ -128,6 +133,7 @@ void setup()
 	game_over = false;
     vidas = 3;
     tiempo = 100; 
+	gano = false;
 
 	miEstudiante.setup();
 	manifestantes.clear();
@@ -175,6 +181,13 @@ void update()
         manifestantes[i].update();
         manifestantes[i].colision(miEstudiante);
 	}
+	// condición de victoria
+
+		if (llegoALaUniversidad(miEstudiante)) {
+    gano = true;
+    game_over = true;
+}
+	
 }	
 
 void draw()
@@ -197,38 +210,48 @@ void draw()
 	for (size_t i = 0; i < manifestantes.size(); i++) {
         manifestantes[i].draw();
     }
-	
+	drawUniversidad(); 
 	refresh();
 	delay_output(DELAY);
 }
-
+	
 void gameover()
 {
-	for (int y = 10; y < 16; y++) mvhline(y, 40, ' ', 40);
+	 for (int y = 10; y < 16; y++) mvhline(y, 40, ' ', 40);
 
-	mvaddch(9, 39, ACS_ULCORNER);
-	mvaddch(9, 80, ACS_URCORNER);
-	mvaddch(16, 39, ACS_LLCORNER);
-	mvaddch(16, 80, ACS_LRCORNER);
-	mvhline(9, 40, ACS_HLINE, 40);
-	mvhline(16, 40, ACS_HLINE, 40);
-	mvvline(10, 39, ACS_VLINE, 6);
-	mvvline(10, 80, ACS_VLINE, 6);
+    mvaddch(9, 39, ACS_ULCORNER);
+    mvaddch(9, 80, ACS_URCORNER);
+    mvaddch(16, 39, ACS_LLCORNER);
+    mvaddch(16, 80, ACS_LRCORNER);
+    mvhline(9, 40, ACS_HLINE, 40);
+    mvhline(16, 40, ACS_HLINE, 40);
+    mvvline(10, 39, ACS_VLINE, 6);
+    mvvline(10, 80, ACS_VLINE, 6);
 
-	mvprintw(12, 55, "GAME OVER");
-	mvprintw(13, 50, "VOLVER A JUGAR? (S/N)");
+    if (gano) {
+        mvprintw(12, 52, "¡¡¡GANASTE!!!");
+        mvprintw(13, 45, "Llegaste a la universidad. ¡¡Éxitos en el final!!");
+        gano = false; 
+        mvprintw(15, 48, "Presiona cualquier tecla para volver al menu...");
+        getch();
+    } else {
+        mvprintw(12, 55, "GAME OVER");
+        mvprintw(13, 50, "VOLVER A JUGAR? (S/N)");
 
-	int opcion = getch();
-
-	if (opcion == 's' || opcion == 'S')
-	{
-		setup();
-		game_over = false;
-	}
-	else if (opcion == 'n' || opcion == 'N')
-	{
-		salir = true;
-	}
+        int opcion = getch();
+        if (opcion == 's' || opcion == 'S') {
+            setup();
+            game_over = false;
+        } else if (opcion == 'n' || opcion == 'N') {
+            salir = true;
+        }
+    }
+}
+void drawUniversidad() {
+    mvprintw(10, 100, "  _____ UNIVERSIDAD _____ ");
+    mvprintw(11, 100, " |                       |");
+    mvprintw(12, 100, " |        [====]         |"); // <-- puerta
+    mvprintw(13, 100, " |_______________________|");
 }
 int menuPrincipal()
 	{
