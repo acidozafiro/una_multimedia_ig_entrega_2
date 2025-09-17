@@ -5,25 +5,25 @@ void Estudiante::setup()
   // Al inicial el juego colocamos al estudiante en el centro abajo de la pantalla.
   m_x = 60;
   m_y = 38;
-  m_tiempo = 100;
+  //m_tiempo = 100;
   m_vidas = 3;
-  m_crisis = false;
+  //m_crisis = false;
 }
 
 void Estudiante::update()
 {
-  if (m_tiempo <= 0)
-	{
-    m_crisis = true;
-    m_vidas--;
-    m_tiempo = 100;
+  //if (m_tiempo <= 0)
+	//{
+    //m_crisis = true;
+    //m_vidas--;
+    //m_tiempo = 100;
   }
 }
 
 void Estudiante::draw()
 {
-  if (!m_crisis)
-  {
+ //0 if (!m_crisis)
+  //{
   /******************\ 
    Dibujo del estudiante
            O
@@ -38,21 +38,21 @@ void Estudiante::draw()
   mvaddch(m_y + 2, m_x + 1, '/');
   mvaddch(m_y + 2, m_x + 2, ' ');
   mvprintw(m_y + 2, m_x + 3, R"( \ )");
-  }
-  else
-  {
+  //}
+  //else
+  //{
     // Fotograma 1 de la explosión.
     /******************\ 
              *
             *.*
             * *
     \******************/
-    mvprintw(m_y, m_x - 2, "    *    ");
-    mvprintw(m_y + 1, m_x - 2, "   *.*   ");
-    mvprintw(m_y + 2, m_x - 2, "   * *   ");    
+    //mvprintw(m_y, m_x - 2, "    *    ");
+    //mvprintw(m_y + 1, m_x - 2, "   *.*   ");
+    //mvprintw(m_y + 2, m_x - 2, "   * *   ");    
     
-    refresh();
-    delay_output(200);
+    //refresh();
+    //delay_output(200);
 
     // Fotograma 2 de la explosión.
     /******************\ 
@@ -61,18 +61,18 @@ void Estudiante::draw()
         *  .   .  *
          /   *   \
     \******************/
-    mvprintw(m_y - 1, m_x - 3, R"(\    *    /)");
-    mvprintw(m_y, m_x - 2, "*  * *  *");
-    mvprintw(m_y + 1, m_x - 3, "*  *   *  *");
-    mvprintw(m_y + 2, m_x - 2, "*  * *  *");
-    mvprintw(m_y + 3, m_x - 3, R"( /   *   \ )");
+    //mvprintw(m_y - 1, m_x - 3, R"(\    *    /)");
+    //mvprintw(m_y, m_x - 2, "*  * *  *");
+    //mvprintw(m_y + 1, m_x - 3, "*  *   *  *");
+    //mvprintw(m_y + 2, m_x - 2, "*  * *  *");
+    //mvprintw(m_y + 3, m_x - 3, R"( /   *   \ )");
 
     // Pausa para ver el fotograma 2.
-    refresh();
-    delay_output(200);
+    //refresh();
+    //delay_output(200);
     
-    m_crisis = false;
-  }
+    //m_crisis = false;
+  //}
 }
 
 //Setters y Getters de posicion
