@@ -39,8 +39,8 @@ enum MenuOpciones {
 
 bool game_over;
 int vidas;
-float tiempo;
-bool crisis;
+//float tiempo;
+//bool crisis;
 bool salir;
 bool gano;
 
@@ -132,7 +132,7 @@ void setup()
 {
 	game_over = false;
     vidas = 3;
-    tiempo = 100; 
+    //tiempo = 100; 
 	gano = false;
 	timeout(50);
 
@@ -172,11 +172,11 @@ void input()
 
 void update()
 {
-	tiempo--;
+	//tiempo--;
 	miEstudiante.update();
 
 	//perder vidas
-	if (miEstudiante.getTiempo() <=0 ) crisis = true;
+	//if (miEstudiante.getTiempo() <=0 ) crisis = true;
 	if (miEstudiante.getVidas() <= 0) game_over = true;
 
 	//colision
@@ -200,8 +200,8 @@ void draw()
 	box(stdscr, 0, 0);
 
 // Dibujamos la interfaz que muestra el tiempo NO SE SI ESTA BIEN, CHECKEAR QUE FUNCIONE
-	mvprintw(0, 80, "[ TIEMPO:     ]");
-	mvprintw(0, 91, "%3d", (int)miEstudiante.getTiempo());
+	//mvprintw(0, 80, "[ TIEMPO:     ]");
+	//mvprintw(0, 91, "%3d", (int)miEstudiante.getTiempo());
 
 // Dibujamos la interfaz que muestra las vidas.
 // Usamos el caracter ♥ para las vidas
