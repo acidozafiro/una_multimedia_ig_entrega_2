@@ -138,9 +138,10 @@ void setup()
 
 	miEstudiante.setup();
 	manifestantes.clear();
-manifestantes.push_back(Manifestante(10, 2));
-manifestantes.push_back(Manifestante(4, 8));
-manifestantes.push_back(Manifestante(15, 10));
+	for (int i = 0; i < 20; i++)
+	{
+		Manifestantes.push_back(Manifestante(rand() % 119 + 1, rand() % 38 + 1));
+	}
 }
 
 void input()
@@ -171,6 +172,7 @@ void input()
 
 void update()
 {
+	tiempo--;
 	miEstudiante.update();
 
 	//perder vidas
@@ -187,6 +189,7 @@ void update()
 		if (llegoALaUniversidad(miEstudiante)) {
     gano = true;
     game_over = true;
+			
 }
 	
 }	
@@ -208,6 +211,7 @@ void draw()
 
 	
 	miEstudiante.draw();
+	
 	for (size_t i = 0; i < manifestantes.size(); i++) {
         manifestantes[i].draw();
     }
