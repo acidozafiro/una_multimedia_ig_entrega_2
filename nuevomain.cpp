@@ -99,6 +99,9 @@ int main()
             case ESTADO_JUGANDO:
                 setup();
                 while (!game_over) {
+					clear();
+					miEstudiante.draw();   // Dibuja al estudiante apenas empieza
+					refresh()
                     input();
                     update();
                     draw();
