@@ -4,7 +4,7 @@ void Estudiante::setup()
 {
   // Al inicial el juego colocamos al estudiante en el centro abajo de la pantalla.
   m_x = 60;
-  m_y = 38;
+  m_y = 10;
   //m_tiempo = 100;
   m_vidas = 3;
   //m_crisis = false;
