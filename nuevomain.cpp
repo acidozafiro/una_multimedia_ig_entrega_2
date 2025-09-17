@@ -93,7 +93,7 @@ int main()
 
             case ESTADO_INSTRUCCIONES:
                 mostrarInstrucciones();
-                estadoJuego = ESTADO_MENU;
+				estadoJuego = ESTADO_MENU;
                 break;
 
             case ESTADO_JUGANDO:
@@ -106,7 +106,10 @@ int main()
                     input();
                     update();
                     draw();
+					 if (miEstudiante.getVidas() <= 0) {
+       				 game_over = true;
                 }
+				}
                 estadoJuego = ESTADO_GAMEOVER;
                 break;
 
@@ -144,7 +147,7 @@ void setup()
 	manifestantes.clear();
 	for (int i = 0; i < 20; i++)
 	{
-		Manifestantes.push_back(Manifestante(rand() % 119 + 1, rand() % 38 + 1));
+		manifestantes.push_back(Manifestante(rand() % 119 + 1, rand() % 38 + 1));
 	}
 }
 
@@ -251,6 +254,7 @@ void gameover()
         if (opcion == 's' || opcion == 'S') {
             setup();
             game_over = false;
+			estadoJuego = ESTADO_JUGANDO;   
         } else if (opcion == 'n' || opcion == 'N') {
             salir = true;
         }
@@ -318,6 +322,7 @@ void mostrarInstrucciones()
 
     refresh();
     getch();
+	
 }
 
 
